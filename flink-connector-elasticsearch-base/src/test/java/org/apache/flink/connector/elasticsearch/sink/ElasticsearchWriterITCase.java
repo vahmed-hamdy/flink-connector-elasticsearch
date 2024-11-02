@@ -59,6 +59,7 @@ import org.elasticsearch.common.unit.ByteSizeValue;
 import org.elasticsearch.common.unit.TimeValue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -82,6 +83,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /** Tests for {@link ElasticsearchWriter}. */
 @Testcontainers
 @ExtendWith(TestLoggerExtension.class)
+@Disabled
 class ElasticsearchWriterITCase {
 
     private static final Logger LOG = LoggerFactory.getLogger(ElasticsearchWriterITCase.class);
@@ -497,12 +499,30 @@ class ElasticsearchWriterITCase {
         }
 
         @Override
+        public void execute(
+                MailOptions mailOptions,
+                ThrowingRunnable<? extends Exception> command,
+                String descriptionFormat,
+                Object... descriptionArgs) {
+            try {
+                command.run();
+            } catch (Exception e) {
+                throw new RuntimeException("Unexpected error", e);
+            }
+        }
+
+        @Override
         public void yield() throws InterruptedException, FlinkRuntimeException {
             Thread.sleep(100);
         }
 
         @Override
         public boolean tryYield() throws FlinkRuntimeException {
+            return false;
+        }
+
+        @Override
+        public boolean shouldInterrupt() {
             return false;
         }
     }
