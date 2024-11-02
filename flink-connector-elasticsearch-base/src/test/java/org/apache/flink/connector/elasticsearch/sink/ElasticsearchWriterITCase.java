@@ -59,7 +59,6 @@ import org.elasticsearch.common.unit.ByteSizeValue;
 import org.elasticsearch.common.unit.TimeValue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -83,7 +82,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /** Tests for {@link ElasticsearchWriter}. */
 @Testcontainers
 @ExtendWith(TestLoggerExtension.class)
-@Disabled
 class ElasticsearchWriterITCase {
 
     private static final Logger LOG = LoggerFactory.getLogger(ElasticsearchWriterITCase.class);
